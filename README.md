@@ -6,27 +6,39 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 
 ### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+package javasamples.one;
 
-```markdown
-Syntax highlighted code block
+import javax.xml.namespace.QName;
+import javax.xml.ws.Service;
+import java.net.URL;
 
-# Header 1
-## Header 2
-### Header 3
+class TimeClient {
 
-- Bulleted
-- List
+    public static void main(String args[ ]) throws Exception {
 
-1. Numbered
-2. List
+        URL url = new URL("http://localhost:1111/one?wsdl");
 
-**Bold** and _Italic_ and `Code` text
+        // Qualified name of the service:
+        //   1st arg is the service URI
+        //   2nd is the service name published in the WSDL
 
-[Link](url) and ![Image](src)
-```
+        QName qname = new QName("http://one.javasamples/", "TimeServerImplService");
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+        // Create, in effect, a factory for the service.
+
+        Service service = Service.create(url, qname);
+
+        // Extract the endpoint interface, the service "port".
+
+        TimeServer eif = service.getPort(TimeServer.class);
+
+        System.out.println(eif.getTimeAsString());
+        System.out.println(eif.getTimeAsElapsed());
+
+   }
+
+}
+
 
 ### Jekyll Themes
 
